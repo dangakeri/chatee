@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,6 +12,27 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isAuth = false;
+  @override
+  void initState() {
+    super.initState();
+    googleSignIn.onCurrentUserChanged.listen((account) {
+      if (account != null) {
+        print('User signed in!: $account');
+        setState(() {
+          isAuth = true;
+        });
+      } else {
+        setState(() {
+          isAuth = false;
+        });
+      }
+    });
+  }
+
+  login() {
+    googleSignIn.signIn();
+  }
+
   Widget buildAuthScreen() {
     return Text('Aunthenticated');
   }
@@ -44,7 +68,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: login,
               child: Container(
                 height: 60,
                 width: 250,
@@ -52,7 +76,7 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.cyan,
                 ),
-                child: Text('Sign in with Google'),
+                child: Center(child: Text('Sign in with Google')),
               ),
             ),
           ],
