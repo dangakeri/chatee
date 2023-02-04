@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
         currentIndex: pageIndex,
         onTap: onTap,
         activeColor: Colors.purple,
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
           BottomNavigationBarItem(
@@ -107,17 +107,11 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
-    // ElevatedButton
-    //   child: Text('Log out'),
-    //   onPressed: () {
-    //     logOut;
-    //   },
-    // );
   }
 
   @override
   Widget build(BuildContext context) {
-    return isAuth ? buildUnAuthScreen() : buildAuthScreen();
+    return isAuth ? buildAuthScreen() : buildUnAuthScreen();
   }
 
   Scaffold buildUnAuthScreen() {
