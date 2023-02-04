@@ -19,7 +19,24 @@ class _TimelineState extends State<Timeline> {
   List<dynamic> users = [];
   @override
   void initState() {
+    // createUser();
     super.initState();
+  }
+
+  createUser() async {
+    await userRef
+        .doc("danikk")
+        .set({"Username": "Jeff", "postCount": "0", "isAdmin": false});
+  }
+
+  updateUser() {
+    userRef
+        .doc("danikk")
+        .update({"Username": "John", "postCount": "0", "isAdmin": false});
+  }
+
+  deleteUser() {
+    userRef.doc("danikk").delete();
   }
 
   @override
