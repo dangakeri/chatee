@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 AppBar header({bool isAppTitle = false, required String titleText}) {
   return AppBar(
-    backgroundColor: Colors.purple,
+    backgroundColor: Colors.teal,
     title: Text(
       isAppTitle ? 'Chatee' : titleText,
       style: TextStyle(

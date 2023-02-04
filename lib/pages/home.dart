@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return isAuth ? buildAuthScreen() : buildUnAuthScreen();
+    return isAuth ? buildUnAuthScreen() : buildAuthScreen();
   }
 
   Scaffold buildUnAuthScreen() {
