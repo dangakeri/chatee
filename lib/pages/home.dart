@@ -60,8 +60,8 @@ class _HomeState extends State<Home> {
     final GoogleSignInAccount? user = googleSignIn.currentUser;
     final DocumentSnapshot doc = await userRef.doc(user!.id).get();
     if (!doc.exists) {
-      final username = await Navigator.push(
-          context, MaterialPageRoute(builder: ((context) => CreateAccount())));
+      final username = await Navigator.push(context,
+          MaterialPageRoute(builder: ((context) => const CreateAccount())));
       userRef.doc(user.id).set({
         "id": user.id,
         "username": username,
@@ -95,7 +95,7 @@ class _HomeState extends State<Home> {
 
   onTap(int pageIndex) {
     pageController.animateToPage(pageIndex,
-        duration: Duration(microseconds: 200), curve: Curves.easeOut);
+        duration: const Duration(microseconds: 200), curve: Curves.easeOut);
   }
 
   Scaffold buildAuthScreen() {
@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
       body: PageView(
         controller: pageController,
         onPageChanged: onPageChanged,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: const [
           Timeline(),
           ActivityFeed(),
@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
   Scaffold buildUnAuthScreen() {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
@@ -170,7 +170,7 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.cyan,
                 ),
-                child: Center(child: Text('Sign in with Google')),
+                child: const Center(child: Text('Sign in with Google')),
               ),
             ),
           ],
