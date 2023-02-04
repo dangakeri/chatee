@@ -2,6 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'activity_feed.dart';
+import 'profile.dart';
+import 'search.dart';
+import 'timeline.dart';
+import 'upload.dart';
+
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 class Home extends StatefulWidget {
@@ -75,10 +81,10 @@ class _HomeState extends State<Home> {
         controller: pageController,
         onPageChanged: onPageChanged,
         physics: NeverScrollableScrollPhysics(),
-        children: [
+        children: const [
           Timeline(),
           ActivityFeed(),
-          Upload,
+          Upload(),
           Search(),
           Profile(),
         ],
