@@ -12,6 +12,10 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   final _formkey = GlobalKey<FormState>();
   late String username;
+  submit() {
+    _formkey.currentState!.save();
+    Navigator.pop(context, username);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
               ),
               GestureDetector(
+                onTap: submit,
                 child: Container(
                   height: 80,
                   width: double.infinity,

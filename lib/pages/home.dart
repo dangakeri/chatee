@@ -12,6 +12,7 @@ import 'upload.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 final userRef = FirebaseFirestore.instance.collection('users');
+final DateTime timestamp = DateTime.now();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -59,8 +60,17 @@ class _HomeState extends State<Home> {
     final GoogleSignInAccount? user = googleSignIn.currentUser;
     final DocumentSnapshot doc = await userRef.doc(user!.id).get();
     if (!doc.exists) {
-      Navigator.push(
+      final username = await Navigator.push(
           context, MaterialPageRoute(builder: ((context) => CreateAccount())));
+      userRef.doc(user.id).set({
+        "id": user.id,
+        "username": username,
+        "photoUrl": user.photoUrl,
+        "email": user.email,
+        "displayName": user.displayName,
+        "bio": "",
+        "timestamp": timestamp,
+      });
     }
   }
 
