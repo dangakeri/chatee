@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'activity_feed.dart';
+import 'create_account.dart';
 import 'profile.dart';
 import 'search.dart';
 import 'timeline.dart';
 import 'upload.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
+final userRef = FirebaseFirestore.instance.collection('users');
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -41,7 +44,7 @@ class _HomeState extends State<Home> {
 
   handleSignIn(GoogleSignInAccount account) {
     if (account != null) {
-      print('User signed in!: $account');
+      createUserInFirestore();
       setState(() {
         isAuth = true;
       });
@@ -49,6 +52,15 @@ class _HomeState extends State<Home> {
       setState(() {
         isAuth = false;
       });
+    }
+  }
+
+  createUserInFirestore() async {
+    final GoogleSignInAccount? user = googleSignIn.currentUser;
+    final DocumentSnapshot doc = await userRef.doc(user!.id).get();
+    if (!doc.exists) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: ((context) => CreateAccount())));
     }
   }
 
