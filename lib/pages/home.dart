@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -12,9 +13,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool isAuth = false;
+  late PageController pageController;
+  int pageIndex = 0;
   @override
   void initState() {
     super.initState();
+    pageController = PageController();
     // detects when user signed in and signed out
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account!);
@@ -42,6 +46,11 @@ class _HomeState extends State<Home> {
     }
   }
 
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
   login() {
     googleSignIn.signIn();
   }
@@ -50,13 +59,53 @@ class _HomeState extends State<Home> {
     googleSignIn.signOut();
   }
 
-  Widget buildAuthScreen() {
-    return ElevatedButton(
-      child: Text('Log out'),
-      onPressed: () {
-        logOut;
-      },
+  onPageChanged(int PageIndex) {
+    setState(() {
+      this.pageIndex = pageIndex;
+    });
+  }
+
+  onTap(int pageIndex) {
+    pageController.jumpTo(pageIndex as double);
+  }
+
+  Scaffold buildAuthScreen() {
+    return Scaffold(
+      body: PageView(
+        controller: pageController,
+        onPageChanged: onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          Timeline(),
+          ActivityFeed(),
+          Upload,
+          Search(),
+          Profile(),
+        ],
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: pageIndex,
+        onTap: onTap,
+        activeColor: Colors.purple,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.whatshot)),
+          BottomNavigationBarItem(icon: Icon(Icons.notifications_active)),
+          BottomNavigationBarItem(
+              icon: Icon(
+            Icons.photo_camera,
+            size: 35,
+          )),
+          BottomNavigationBarItem(icon: Icon(Icons.search)),
+          BottomNavigationBarItem(icon: Icon(Icons.account_circle)),
+        ],
+      ),
     );
+    // ElevatedButton
+    //   child: Text('Log out'),
+    //   onPressed: () {
+    //     logOut;
+    //   },
+    // );
   }
 
   @override
